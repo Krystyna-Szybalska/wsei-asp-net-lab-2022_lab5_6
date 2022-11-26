@@ -7,6 +7,7 @@ public class AppDbContext: DbContext
 {
     public DbSet<Book> Books { get; set; }
     public DbSet<Author> Authors { get; set; }
+    public DbSet<BookDetails> BookDetails { get; set; }
     private string DbPath;
     public AppDbContext()
     {
@@ -57,14 +58,25 @@ public class AppDbContext: DbContext
             );
 
         modelBuilder.Entity<Book>()
- .HasMany<Author>(b => b.Authors)
- .WithMany(a => a.Books)
- .UsingEntity(join => join.HasData(
- new { BooksId = 1, AuthorsId = 1 },
- new { BooksId = 2, AuthorsId = 3 },
- new { BooksId = 3, AuthorsId = 2 },
- new { BooksId = 1, AuthorsId = 2 }
- ));
+        .HasMany<Author>(b => b.Authors)
+        .WithMany(a => a.Books)
+        .UsingEntity(join => join.HasData(
+         new { BooksId = 1, AuthorsId = 1 },
+         new { BooksId = 2, AuthorsId = 3 },
+         new { BooksId = 3, AuthorsId = 2 },
+         new { BooksId = 1, AuthorsId = 2 }
+         ));
+
+        modelBuilder.Entity<BookDetails>().HasData(
+            new BookDetails() { ISBN= "isbn1", NumberOfPages=555, Rating=5},
+            new BookDetails() { ISBN= "isbn1", NumberOfPages=666, Rating=6},
+            new BookDetails() { ISBN= "isbn1", NumberOfPages=777, Rating=7}
+            );
+
+        modelBuilder.Entity<Book>()
+            .HasOne<BookDetails>(a => a.BookDetails)
+          // .WithOne(b=>b.A)
+            
 
     }
 
