@@ -1,4 +1,4 @@
-﻿@model lab_5.Models.Book;
+﻿@model lab_5.Models.BookViewModel;
 
 @{
     ViewBag.Title = "title";
@@ -17,6 +17,9 @@
             <label asp-for="ReleaseDate"></label>
             <input class="form-control" asp-for="ReleaseDate"/>
             <span asp-validation-for="ReleaseDate"></span>
+        </div>  
+        <div class="mb-3">
+            <select asp-for="AuthorsId" class="form-control" aspitems=@Model.Authors></select>
         </div>
         <div class="mb-3">
             <button class ="btn btn-primary" type="submit">Zapisz zmiany</button>
